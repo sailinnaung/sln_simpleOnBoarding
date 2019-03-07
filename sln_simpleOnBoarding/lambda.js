@@ -22,10 +22,10 @@ exports.handler = function (event, context, callback) {
             headers: { "X-Authorization": access_token, "Accept": "*/*" }
         }).then((response) => {
             // your code goes here
-
+            console.log(response.body)
         }).catch((err) => {
             // error handling goes here
-            
+
         });
 
 
