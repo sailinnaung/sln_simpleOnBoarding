@@ -1,0 +1,85 @@
+{
+  "EDITOR_STATE": {
+    "allProjectFiles": {
+      "c7dc1a81-a3ba-4ad2-a851-8f9d33d72c6d": {
+        "id": "c7dc1a81-a3ba-4ad2-a851-8f9d33d72c6d",
+        "parent": null,
+        "name": "sln_simpleOnBoarding",
+        "type": "DIRECTORY",
+        "isDirectory": true,
+        "children": [
+          "49a75fd8-e92a-4f2a-bb0d-fc7f0da03a1d"
+        ],
+        "isRemovable": false,
+        "filePath": "sln_simpleOnBoarding"
+      },
+      "49a75fd8-e92a-4f2a-bb0d-fc7f0da03a1d": {
+        "id": "49a75fd8-e92a-4f2a-bb0d-fc7f0da03a1d",
+        "parent": "c7dc1a81-a3ba-4ad2-a851-8f9d33d72c6d",
+        "name": "lambda.js",
+        "type": "LAMBDA_FILE",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "sln_simpleOnBoarding/lambda.js",
+        "code": "\nlet Swagger = require('swagger-client');\n\nexports.handler = function (event, context, callback) {\n\n    Swagger.http({\n        url: 'https://services.apixplatform.com/api-sandbox/application/token',\n        method: 'post',\n        query: {},\n        headers: { \"Accept\": \"*/*\", \"Content-Type\": \"application/json\" },\n        body: JSON.stringify({\n            \"userName\": \"Mmbank10@apixdemo.com\",\n            \"password\": \"Passw0rd@\"\n        })\n    }).then((response) => {\n        var access_token = \"bearer \" + response.body.access_token;\n        // Insert new API calls here to call with APIX Access Token\n        Swagger.http({\n            url: `https://api.apixplatform.com/sbbank/1.0/bank/banks/banks`,\n            method: 'get',\n            query: { \"page\": \"0\", \"size\": \"15\" },\n            headers: { \"X-Authorization\": access_token, \"Accept\": \"*/*\" }\n        }).then((response) => {\n            // your code goes here\n\n        }).catch((err) => {\n            // error handling goes here\n            \n        });\n\n\n        callback(null, access_token);\n    }).catch((err) => {\n        console.log(err);\n        callback(\"Execution failed\");\n    });\n\n}",
+        "triggers": [],
+        "config": {
+          "runtime": "nodejs8.10",
+          "timeout": 60,
+          "memory": 128
+        },
+        "testCases": {
+          "17f490bf-909b-4e0c-b7a2-d4530cf8c625": {
+            "id": "17f490bf-909b-4e0c-b7a2-d4530cf8c625",
+            "name": "Unnamed event",
+            "functionId": "49a75fd8-e92a-4f2a-bb0d-fc7f0da03a1d",
+            "event": "{\n    \"key1\": \"value1\",\n    \"key2\": \"value2\",\n    \"key3\": \"value3\"\n}"
+          }
+        }
+      }
+    },
+    "deletedFiles": [],
+    "rootNode": "c7dc1a81-a3ba-4ad2-a851-8f9d33d72c6d",
+    "openFiles": [
+      "49a75fd8-e92a-4f2a-bb0d-fc7f0da03a1d"
+    ],
+    "currentFileId": "49a75fd8-e92a-4f2a-bb0d-fc7f0da03a1d",
+    "resources": {},
+    "envVariables": [
+      {
+        "lambdaId": "all",
+        "varKey": "SIGMA_AWS_ACC_ID",
+        "varValue": null,
+        "shouldPersist": false,
+        "displayOnly": false,
+        "editable": false
+      }
+    ],
+    "packageJSON": {
+      "dependencies": {
+        "swagger-client": {
+          "name": "swagger-client",
+          "version": "3.8.21"
+        }
+      }
+    },
+    "lambdaId": "49a75fd8-e92a-4f2a-bb0d-fc7f0da03a1d"
+  },
+  "PROJECT_META": {
+    "projectName": "sln_simpleOnBoarding",
+    "projectDescription": "Experiment for KYC",
+    "projectVersion": "1.0.0",
+    "projectRegion": "ap-southeast-1",
+    "platform": "AWS",
+    "platformRegions": {},
+    "lastSave": 1551946404827
+  },
+  "VCS_STATE": {
+    "provider": "GitHub",
+    "repo": {
+      "name": "sln_simpleOnBoarding",
+      "url": "https://github.com/sailinnaung/sln_simpleOnBoarding"
+    }
+  }
+}
